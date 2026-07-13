@@ -1,0 +1,4 @@
+# Never commit guest personal data (emails, phone numbers) to a public repo
+private/
+*.xlsx
+.DS_Store

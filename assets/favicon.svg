@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <rect width="32" height="32" rx="7" fill="#2f4a3e"/>
+  <path d="M4 24 L11 12 L16 19 L21 9 L28 24 Z" fill="#dfe6e2"/>
+  <text x="16" y="30" font-family="Georgia, serif" font-size="9" fill="#c9a24b" text-anchor="middle">J&amp;D</text>
+</svg>

@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="fr" data-lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>RSVP · Johana & Dylan</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="icon" href="assets/favicon.svg" />
+</head>
+<body>
+  <header class="nav">
+    <a class="brand" href="index.html">J<span class="amp">&amp;</span>D</a>
+    <nav class="nav-links">
+      <a href="index.html"><span class="fr">Accueil</span><span class="en">Home</span></a>
+      <a href="infos.html"><span class="fr">Infos pratiques</span><span class="en">Details</span></a>
+      <a href="rsvp.html" class="active cta-link">RSVP</a>
+    </nav>
+    <button class="lang-toggle" id="langToggle"><span class="fr">EN</span><span class="en">FR</span></button>
+  </header>
+
+  <div class="page-head">
+    <p id="greeting"><span class="fr">Nous avons hâte de vous lire</span><span class="en">We can't wait to hear from you</span></p>
+    <h1>RSVP</h1>
+  </div>
+
+  <div class="form-wrap">
+    <!-- THANK YOU (shown after submit) -->
+    <div class="thankyou" id="thankyou">
+      <span class="ornament">❦</span>
+      <p class="big"><span class="fr">Merci !</span><span class="en">Thank you!</span></p>
+      <p><span class="fr">Votre réponse est bien enregistrée. On se réjouit déjà. ❤️ Vous pouvez modifier votre réponse en renvoyant le formulaire à tout moment.</span>
+         <span class="en">Your reply is saved. We're already thrilled. ❤️ You can change your answer any time by submitting the form again.</span></p>
+      <a href="index.html" class="btn btn-ghost"><span class="fr">Retour à l'accueil</span><span class="en">Back home</span></a>
+    </div>
+
+    <form id="rsvpForm" novalidate>
+      <div class="msg err" id="errBox"></div>
+
+      <!-- Household -->
+      <div class="field">
+        <label for="household"><span class="fr">Qui répond ? (foyer / famille)</span><span class="en">Who's replying? (household / family)</span></label>
+        <input type="text" id="household" name="household" required placeholder="Ex : Martine et Benoît" />
+      </div>
+
+      <!-- Attending -->
+      <div class="field">
+        <span class="qlabel"><span class="fr">Serez-vous des nôtres le 22 décembre ?</span><span class="en">Will you join us on 22 December?</span></span>
+        <div class="optionset" data-toggle="attending">
+          <label><input type="radio" name="attending" value="yes" required><span class="fr">Oui, avec joie ! 🎉</span><span class="en">Yes, joyfully! 🎉</span></label>
+          <label><input type="radio" name="attending" value="no"><span class="fr">Hélas, non 😢</span><span class="en">Sadly, no 😢</span></label>
+        </div>
+      </div>
+
+      <!-- ===== BLOCK shown only if attending = yes ===== -->
+      <div class="conditional" id="ifYes">
+
+        <div class="field">
+          <span class="qlabel"><span class="fr">Combien serez-vous ?</span><span class="en">How many of you?</span></span>
+          <div class="row2">
+            <div><label class="hint" for="adults"><span class="fr">Adultes</span><span class="en">Adults</span></label>
+              <input type="number" id="adults" name="adults" min="0" max="20" value="1" /></div>
+            <div><label class="hint" for="children"><span class="fr">Enfants</span><span class="en">Children</span></label>
+              <input type="number" id="children" name="children" min="0" max="15" value="0" /></div>
+          </div>
+          <span class="hint"><span class="fr">Si vous avez des enfants, précisez leurs âges plus bas (utile pour les tarifs et les lits parapluie).</span><span class="en">If you have children, note their ages further down (helps with prices and cots).</span></span>
+        </div>
+
+        <!-- Nights -->
+        <div class="field">
+          <span class="qlabel"><span class="fr">Quelles nuits comptez-vous rester ?</span><span class="en">Which nights do you plan to stay?</span></span>
+          <span class="hint"><span class="fr">Nous sommes sur place du 18 au 26. La nuit du 22 est la plus festive !</span><span class="en">We're on site from the 18th to the 26th. The night of the 22nd is the most festive!</span></span>
+          <div class="nights" id="nights"></div>
+        </div>
+
+        <!-- Accommodation -->
+        <div class="field">
+          <span class="qlabel"><span class="fr">Où souhaitez-vous dormir ?</span><span class="en">Where would you like to sleep?</span></span>
+          <div class="optionset">
+            <label><input type="radio" name="lodging" value="auberge"><span class="fr">À l'auberge (demi-pension)</span><span class="en">At the hostel (half-board)</span></label>
+            <label><input type="radio" name="lodging" value="grandaigle"><span class="fr">Au Grand Aigle (je réserve)</span><span class="en">At Le Grand Aigle (I'll book)</span></label>
+            <label><input type="radio" name="lodging" value="own"><span class="fr">Mon propre hébergement</span><span class="en">My own arrangement</span></label>
+            <label><input type="radio" name="lodging" value="dayonly"><span class="fr">Juste la journée du 22</span><span class="en">Just the day of the 22nd</span></label>
+          </div>
+        </div>
+
+        <!-- Room preferences (only if auberge) -->
+        <div class="conditional" id="ifAuberge">
+          <div class="field">
+            <span class="qlabel"><span class="fr">Préférence de salle de bain</span><span class="en">Bathroom preference</span></span>
+            <div class="optionset">
+              <label><input type="radio" name="bathroom" value="private"><span class="fr">Privée si possible</span><span class="en">Private if possible</span></label>
+              <label><input type="radio" name="bathroom" value="nopref"><span class="fr">Peu importe</span><span class="en">No preference</span></label>
+            </div>
+          </div>
+          <div class="field">
+            <label for="roomwith"><span class="fr">Avec qui aimeriez-vous partager une chambre ?</span><span class="en">Who would you like to share a room with?</span></label>
+            <input type="text" id="roomwith" name="roomwith" placeholder="Ex : à côté de la famille X, ou entre nous" />
+          </div>
+          <div class="field">
+            <span class="qlabel"><span class="fr">Location de ski à l'auberge ?</span><span class="en">Ski rental at the hostel?</span></span>
+            <div class="optionset">
+              <label><input type="radio" name="ski" value="none"><span class="fr">Non merci</span><span class="en">No thanks</span></label>
+              <label><input type="radio" name="ski" value="day"><span class="fr">À la journée (35€)</span><span class="en">Per day (€35)</span></label>
+              <label><input type="radio" name="ski" value="week"><span class="fr">À la semaine (65€)</span><span class="en">Per week (€65)</span></label>
+            </div>
+            <input type="text" name="skidetails" placeholder="Combien de personnes + tailles / pointures ?" style="margin-top:.6rem" />
+          </div>
+          <div class="field">
+            <label for="cots"><span class="fr">Besoin de lits parapluie ? (combien)</span><span class="en">Need travel cots? (how many)</span></label>
+            <input type="number" id="cots" name="cots" min="0" max="4" value="0" />
+            <span class="hint"><span class="fr">L'auberge en prête 2. Les enfants en lit parapluie ne paient pas la nuit.</span><span class="en">The hostel lends 2. Kids in a cot don't pay for the night.</span></span>
+          </div>
+        </div>
+
+        <!-- Travel -->
+        <div class="field">
+          <span class="qlabel"><span class="fr">Comment venez-vous ?</span><span class="en">How are you getting there?</span></span>
+          <div class="optionset">
+            <label><input type="radio" name="travel" value="train"><span class="fr">En train (Briançon + navette)</span><span class="en">By train (Briançon + shuttle)</span></label>
+            <label><input type="radio" name="travel" value="car"><span class="fr">En voiture</span><span class="en">By car</span></label>
+            <label><input type="radio" name="travel" value="plane"><span class="fr">En avion</span><span class="en">By plane</span></label>
+            <label><input type="radio" name="travel" value="unsure"><span class="fr">Pas encore décidé</span><span class="en">Not sure yet</span></label>
+          </div>
+          <div class="optionset" style="margin-top:.6rem">
+            <label style="min-width:100%"><input type="checkbox" name="carpool" value="yes"><span class="fr">Le covoiturage m'intéresse (proposer ou chercher une place)</span><span class="en">I'm interested in carpooling (offer or find a seat)</span></label>
+          </div>
+        </div>
+
+        <!-- Children ages -->
+        <div class="field">
+          <label for="childages"><span class="fr">Âges des enfants (si vous en amenez)</span><span class="en">Children's ages (if you're bringing any)</span></label>
+          <input type="text" id="childages" name="childages" placeholder="Ex : 3, 6, 9" />
+        </div>
+
+        <!-- Dietary -->
+        <div class="field">
+          <label for="diet"><span class="fr">Régimes / allergies alimentaires</span><span class="en">Dietary needs / allergies</span></label>
+          <input type="text" id="diet" name="diet" placeholder="Végétarien, sans gluten, allergies…" />
+        </div>
+      </div><!-- /ifYes -->
+
+      <!-- Civil ceremony (everyone) -->
+      <div class="field">
+        <span class="qlabel"><span class="fr">Cérémonie civile — vendredi 27 novembre, mairie du 13ᵉ (Paris)</span><span class="en">Civil ceremony — Friday 27 November, Mairie du 13ᵉ (Paris)</span></span>
+        <div class="optionset">
+          <label><input type="radio" name="ceremony" value="yes"><span class="fr">J'y serai</span><span class="en">I'll be there</span></label>
+          <label><input type="radio" name="ceremony" value="maybe"><span class="fr">Peut-être</span><span class="en">Maybe</span></label>
+          <label><input type="radio" name="ceremony" value="no"><span class="fr">Pas possible</span><span class="en">Can't make it</span></label>
+        </div>
+      </div>
+
+      <!-- Contact -->
+      <div class="field row2">
+        <div><label for="email"><span class="fr">Votre email</span><span class="en">Your email</span></label>
+          <input type="email" id="email" name="email" placeholder="pour vous tenir au courant" /></div>
+        <div><label for="phone"><span class="fr">Téléphone (facultatif)</span><span class="en">Phone (optional)</span></label>
+          <input type="text" id="phone" name="phone" placeholder="+33…" /></div>
+      </div>
+
+      <!-- Message -->
+      <div class="field">
+        <label for="message"><span class="fr">Un petit mot pour nous ?</span><span class="en">A little note for us?</span></label>
+        <textarea id="message" name="message" placeholder="On adore les mots doux…"></textarea>
+      </div>
+
+      <div class="form-note">
+        <span class="fr">🔒 Vos réponses nous parviennent directement et ne servent qu'à organiser la fête. Un souci pour envoyer ? Écrivez-nous, on s'occupe de tout.</span>
+        <span class="en">🔒 Your answers come straight to us and are only used to organise the celebration. Trouble submitting? Just email us and we'll sort it.</span>
+      </div>
+
+      <input type="hidden" name="id" id="guestId" value="" />
+      <input type="hidden" name="submittedLang" id="submittedLang" value="fr" />
+
+      <div class="submitrow">
+        <button type="submit" class="btn btn-primary" id="submitBtn">
+          <span class="fr">Envoyer notre réponse</span><span class="en">Send our reply</span>
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <footer class="footer">
+    <p class="mono">Johana Carrier &amp; Dylan Glover · 22.12.2026 · Serre Chevalier</p>
+  </footer>
+
+  <script src="js/main.js"></script>
+  <script src="js/rsvp.js"></script>
+</body>
+</html>
