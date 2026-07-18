@@ -20,9 +20,10 @@ var SHEET_NAME = "RSVPs";
 
 // Column order in the sheet. Add fields here and to the form; unknowns are ignored.
 var COLS = [
-  "timestamp", "id", "household", "attending", "adults", "children",
-  "nights", "lodging", "bathroom", "roomwith", "ski", "skidetails",
-  "cots", "travel", "carpool", "childages", "diet", "ceremony",
+  "timestamp", "id", "household", "attending", "over5", "under5", "cots",
+  "nights", "lodging", "bathroom", "roomwith",
+  "ski_type", "ski_period", "ski_people", "ski_days", "ski_sizes",
+  "travel", "carpool", "childages", "diet", "ceremony",
   "email", "phone", "message", "page_lang", "submittedLang"
 ];
 

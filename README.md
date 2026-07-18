@@ -36,6 +36,10 @@ Then on GitHub: **Settings ▸ Pages ▸ Source: `main` / root**. Your site appe
 The site works immediately. Until you wire the backend (step 2), the RSVP
 button opens a pre-filled email to you, so **no reply is ever lost**.
 
+> **Photos:** drop `1.jpg … 4.jpg` into `assets/photos/` and they appear in the
+> "Discover Serre Chevalier" gallery. Empty slots hide themselves. See
+> `assets/photos/README.md`.
+
 ## 2. Collect RSVPs in a Google Sheet — 5 min
 
 1. Create a Google Sheet → **Extensions ▸ Apps Script**.
@@ -75,7 +79,10 @@ The link pre-fills each household's name and headcount, and carries a hidden
 
 ## Managing the bed crunch (the real problem)
 
-You have up to **112 adults + 63 children = 175** against **72 beds**. As
-replies arrive, pivot the RSVP sheet by `nights` × `lodging` to see auberge
-demand per night. Steer overflow to Le Grand Aigle / day-only early. The
-`roomwith` + `bathroom` fields feed straight into your existing room sheet.
+You have up to **112 adults + 63 children = 175** against **72 beds**. The form
+now collects fresh headcounts (`over5`, `under5`, `cots`) rather than trusting
+the old list. As replies arrive, pivot the RSVP sheet by `nights` × `lodging`
+to see auberge demand per night. Steer overflow to Le Grand Aigle / day-only
+early. The `roomwith` + `bathroom` fields feed straight into your existing room
+sheet, and `ski_type` × `ski_period` × `ski_days` gives the auberge a clean
+rental order.

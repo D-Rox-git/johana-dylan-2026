@@ -57,21 +57,31 @@
       <!-- ===== BLOCK shown only if attending = yes ===== -->
       <div class="conditional" id="ifYes">
 
+        <!-- Headcount — collected fresh, we don't rely on our old list -->
         <div class="field">
           <span class="qlabel"><span class="fr">Combien serez-vous ?</span><span class="en">How many of you?</span></span>
           <div class="row2">
-            <div><label class="hint" for="adults"><span class="fr">Adultes</span><span class="en">Adults</span></label>
-              <input type="number" id="adults" name="adults" min="0" max="20" value="1" /></div>
-            <div><label class="hint" for="children"><span class="fr">Enfants</span><span class="en">Children</span></label>
-              <input type="number" id="children" name="children" min="0" max="15" value="0" /></div>
+            <div><label class="hint" for="over5"><span class="fr">Personnes de plus de 5 ans</span><span class="en">People over 5 years old</span></label>
+              <input type="number" id="over5" name="over5" min="0" max="20" placeholder="0" /></div>
+            <div><label class="hint" for="under5"><span class="fr">Jeunes enfants de 5 ans ou moins</span><span class="en">Little ones aged 5 or under</span></label>
+              <input type="number" id="under5" name="under5" min="0" max="10" placeholder="0" /></div>
           </div>
-          <span class="hint"><span class="fr">Si vous avez des enfants, précisez leurs âges plus bas (utile pour les tarifs et les lits parapluie).</span><span class="en">If you have children, note their ages further down (helps with prices and cots).</span></span>
+          <span class="hint"><span class="fr">Les 5 ans et moins peuvent dormir en lit parapluie (nuit offerte, dîner à 7,50 €). Merci de compter tout le monde, même vous !</span><span class="en">Children 5 and under can sleep in a travel cot (night free, dinner €7.50). Please count everyone, yourselves included!</span></span>
         </div>
 
-        <!-- Nights -->
+        <!-- Cots — only if there are little ones -->
+        <div class="conditional" id="ifCots">
+          <div class="field">
+            <label for="cots"><span class="fr">Combien de lits parapluie vous faut-il ?</span><span class="en">How many travel cots do you need?</span></label>
+            <input type="number" id="cots" name="cots" min="0" max="6" placeholder="0" />
+            <span class="hint"><span class="fr">L'auberge en prête 2 ; au-delà, prévoyez le vôtre si possible.</span><span class="en">The hostel lends 2; beyond that, please bring your own if you can.</span></span>
+          </div>
+        </div>
+
+        <!-- Dates / nights -->
         <div class="field">
-          <span class="qlabel"><span class="fr">Quelles nuits comptez-vous rester ?</span><span class="en">Which nights do you plan to stay?</span></span>
-          <span class="hint"><span class="fr">Nous sommes sur place du 18 au 26. La nuit du 22 est la plus festive !</span><span class="en">We're on site from the 18th to the 26th. The night of the 22nd is the most festive!</span></span>
+          <span class="qlabel"><span class="fr">Quelles nuits serez-vous là ?</span><span class="en">Which nights will you be there?</span></span>
+          <span class="hint"><span class="fr">Du vendredi 18 au samedi 26 décembre. Cochez chaque nuit où vous dormez sur place. La nuit du mardi 22 (★) est la grande fête !</span><span class="en">Friday 18 to Saturday 26 December. Tick each night you'll sleep on site. The night of Tuesday the 22nd (★) is the big celebration!</span></span>
           <div class="nights" id="nights"></div>
         </div>
 
@@ -99,19 +109,38 @@
             <label for="roomwith"><span class="fr">Avec qui aimeriez-vous partager une chambre ?</span><span class="en">Who would you like to share a room with?</span></label>
             <input type="text" id="roomwith" name="roomwith" placeholder="Ex : à côté de la famille X, ou entre nous" />
           </div>
-          <div class="field">
-            <span class="qlabel"><span class="fr">Location de ski à l'auberge ?</span><span class="en">Ski rental at the hostel?</span></span>
-            <div class="optionset">
-              <label><input type="radio" name="ski" value="none"><span class="fr">Non merci</span><span class="en">No thanks</span></label>
-              <label><input type="radio" name="ski" value="day"><span class="fr">À la journée (35€)</span><span class="en">Per day (€35)</span></label>
-              <label><input type="radio" name="ski" value="week"><span class="fr">À la semaine (65€)</span><span class="en">Per week (€65)</span></label>
-            </div>
-            <input type="text" name="skidetails" placeholder="Combien de personnes + tailles / pointures ?" style="margin-top:.6rem" />
+        </div>
+
+        <!-- Ski / snowboard rental at the auberge -->
+        <div class="field">
+          <span class="qlabel"><span class="fr">Location de ski / snowboard à l'auberge ?</span><span class="en">Ski / snowboard rental at the hostel?</span></span>
+          <span class="hint"><span class="fr">Le matériel se loue directement à l'auberge : 35 €/jour ou 65 €/semaine. Dites-nous quoi et quels jours.</span><span class="en">Gear is rented right at the hostel: €35/day or €65/week. Tell us what and which days.</span></span>
+          <div class="optionset" style="margin-top:.5rem">
+            <label><input type="radio" name="ski_type" value="none"><span class="fr">Pas de location</span><span class="en">No rental</span></label>
+            <label><input type="radio" name="ski_type" value="ski"><span class="fr">Ski</span><span class="en">Skis</span></label>
+            <label><input type="radio" name="ski_type" value="snowboard"><span class="fr">Snowboard</span><span class="en">Snowboard</span></label>
+            <label><input type="radio" name="ski_type" value="both"><span class="fr">Les deux</span><span class="en">Both</span></label>
           </div>
-          <div class="field">
-            <label for="cots"><span class="fr">Besoin de lits parapluie ? (combien)</span><span class="en">Need travel cots? (how many)</span></label>
-            <input type="number" id="cots" name="cots" min="0" max="4" value="0" />
-            <span class="hint"><span class="fr">L'auberge en prête 2. Les enfants en lit parapluie ne paient pas la nuit.</span><span class="en">The hostel lends 2. Kids in a cot don't pay for the night.</span></span>
+          <div class="conditional" id="ifSki">
+            <div class="field">
+              <span class="qlabel"><span class="fr">Formule</span><span class="en">Rate</span></span>
+              <div class="optionset">
+                <label><input type="radio" name="ski_period" value="day"><span class="fr">À la journée (35 €)</span><span class="en">Per day (€35)</span></label>
+                <label><input type="radio" name="ski_period" value="week"><span class="fr">À la semaine (65 €)</span><span class="en">Per week (€65)</span></label>
+              </div>
+            </div>
+            <div class="field">
+              <label for="ski_people"><span class="fr">Pour combien de personnes ?</span><span class="en">For how many people?</span></label>
+              <input type="number" id="ski_people" name="ski_people" min="1" max="20" placeholder="0" />
+            </div>
+            <div class="field">
+              <span class="qlabel"><span class="fr">Quels jours ? (surtout si formule journée)</span><span class="en">Which days? (mainly if per-day)</span></span>
+              <div class="nights" id="skidays"></div>
+            </div>
+            <div class="field">
+              <label for="ski_sizes"><span class="fr">Tailles, pointures et niveau</span><span class="en">Heights, shoe sizes and level</span></label>
+              <input type="text" id="ski_sizes" name="ski_sizes" placeholder="Ex : 1m75 / 42 / confirmé — 1m20 enfant débutant" />
+            </div>
           </div>
         </div>
 

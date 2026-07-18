@@ -26,10 +26,10 @@ var GUEST_TAB   = "Guests";
 
 /** Build the personalised RSVP link for one guest row. */
 function buildLink_(g) {
+  // We pass only name + email + id. Headcounts are collected fresh in the form
+  // (the old list is unreliable), so we deliberately don't pre-fill them.
   var q = "?id=" + encodeURIComponent(g.id) +
           "&h="  + encodeURIComponent(g.name) +
-          "&a="  + encodeURIComponent(g.adults || "") +
-          "&k="  + encodeURIComponent(g.children || "") +
           "&email=" + encodeURIComponent(g.email1 || "");
   return BASE_URL + "/rsvp.html" + q;
 }
