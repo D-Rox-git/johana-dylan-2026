@@ -18,7 +18,7 @@
  * ------------------------------------------------------------------
  */
 
-var BASE_URL    = "https://YOURNAME.github.io/johana-dylan-2026"; // <- your GitHub Pages URL, no trailing slash
+var BASE_URL    = "https://d-rox-git.github.io/johana-dylan-2026"; // your live GitHub Pages URL (no trailing slash)
 var SENDER_NAME = "Johana & Dylan";
 var REPLY_TO    = "johana.carrier@gmail.com";
 var TEST_ADDRESS = "dylan.glover@gmail.com";
