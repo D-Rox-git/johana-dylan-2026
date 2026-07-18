@@ -41,6 +41,7 @@ function doPost(e) {
     });
     sheet.appendRow(row);
 
+    markResponded_(p, now); // stamp the Guests tab so you see who's replied at a glance
     notify_(p, now);
     confirmToGuest_(p);
 
@@ -67,6 +68,29 @@ function getSheet_() {
     sh.setFrozenRows(1);
   }
   return sh;
+}
+
+/**
+ * Close the loop: when an RSVP comes in, stamp the matching row on the
+ * "Guests" tab (the one the mail-merge uses) so you always know who has
+ * replied vs. who still needs a nudge. Silently does nothing if there's
+ * no Guests tab or no id match.
+ */
+function markResponded_(p, now) {
+  if (!p.id) return;
+  var sh = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Guests");
+  if (!sh) return;
+  var values = sh.getDataRange().getValues();
+  var head = values[0].map(function (h) { return String(h).trim(); });
+  var idCol = head.indexOf("id"), rCol = head.indexOf("responded");
+  if (idCol < 0 || rCol < 0) return;
+  for (var r = 1; r < values.length; r++) {
+    if (String(values[r][idCol]).trim() === String(p.id).trim()) {
+      var tag = (p.attending === "yes" ? "✅ oui " : "❌ non ") + now;
+      sh.getRange(r + 1, rCol + 1).setValue(tag);
+      return;
+    }
+  }
 }
 
 /** Notification to the couple, so you see every reply in real time. */
