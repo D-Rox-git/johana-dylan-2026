@@ -4,7 +4,7 @@
 
 // 1) PASTE your Google Apps Script Web App URL here after deploying (see apps-script/README).
 //    Until then, submissions fall back to an email so nothing is ever lost.
-var ENDPOINT = "PASTE_YOUR_APPS_SCRIPT_URL_HERE";
+var ENDPOINT = "https://script.google.com/macros/s/AKfycby1DE67yD745WLkNpDqOCF8KQiUSvs3Pn9HnYD9c4fhrt9CkB7uB9tnrW4F42t_GWg/exec";
 var FALLBACK_EMAIL = "johana.carrier@gmail.com"; // used only if the endpoint isn't set / fails
 
 // ---- Days the couple is on site: Fri 18 → Sat 26 Dec 2026 ----
