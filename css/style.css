@@ -41,7 +41,10 @@ a{color:var(--pine);text-decoration:none}
 .names{font-family:var(--serif);font-weight:500;font-size:clamp(3rem,11vw,6.5rem);line-height:1;margin:0;color:var(--pine-dark)}
 .names .amp{color:var(--berry);font-style:italic;font-weight:400}
 .tagline{font-family:var(--serif);font-style:italic;font-size:clamp(1.2rem,3.5vw,1.7rem);color:var(--wood);margin:1rem 0 2rem}
-.hero-dates{display:flex;justify-content:center;gap:2rem;margin-bottom:2.2rem}
+.hero-photo{display:block;width:min(330px,74vw);margin:1.7rem auto .4rem;transform:rotate(-2.2deg);
+  border-radius:4px;box-shadow:0 16px 34px rgba(31,51,43,.24);transition:transform .3s ease}
+.hero-photo:hover{transform:rotate(0deg) scale(1.02)}
+.hero-dates{display:flex;justify-content:center;gap:2rem;margin:1.4rem 0 2.2rem}
 .hero-dates div{display:flex;flex-direction:column;gap:.15rem}
 .hero-dates strong{font-family:var(--serif);font-size:1.8rem;color:var(--pine)}
 .hero-dates span{font-size:.85rem;color:var(--muted)}
