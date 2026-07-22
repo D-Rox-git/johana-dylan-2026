@@ -21,9 +21,9 @@ var SHEET_NAME = "RSVPs";
 // Column order in the sheet. Add fields here and to the form; unknowns are ignored.
 var COLS = [
   "timestamp", "id", "household", "attending", "over5", "under5", "cots",
-  "nights", "lodging", "bathroom", "roomwith",
+  "nights", "lodging", "roomwith",
   "ski_type", "ski_period", "ski_people", "ski_days", "ski_sizes",
-  "travel", "carpool", "childages", "diet", "ceremony",
+  "travel", "carpool", "carpool_seats", "childages", "diet", "ceremony",
   "email", "phone", "message", "page_lang", "submittedLang"
 ];
 
@@ -35,11 +35,8 @@ function doPost(e) {
     var sheet = getSheet_();
     var now = Utilities.formatDate(new Date(), "Europe/Paris", "yyyy-MM-dd HH:mm:ss");
 
-    var row = COLS.map(function (c) {
-      if (c === "timestamp") return now;
-      return p[c] !== undefined ? p[c] : "";
-    });
-    sheet.appendRow(row);
+    p.timestamp = now;
+    appendByHeader_(sheet, p); // writes by header position; auto-adds any new field as a new column
 
     markResponded_(p, now); // stamp the Guests tab so you see who's replied at a glance
     notify_(p, now);
@@ -68,6 +65,36 @@ function getSheet_() {
     sh.setFrozenRows(1);
   }
   return sh;
+}
+
+/**
+ * Append a row keyed by the sheet's header, so column order is stable and any
+ * NEW field the form starts sending automatically gets its own column — no
+ * need to touch this script or redeploy again when the form evolves.
+ */
+function appendByHeader_(sheet, obj) {
+  var lastCol = sheet.getLastColumn();
+  var header = lastCol ? sheet.getRange(1, 1, 1, lastCol).getValues()[0].map(String) : [];
+  if (!header.length || !header.join("")) {         // empty sheet -> seed from COLS
+    header = COLS.slice();
+    sheet.getRange(1, 1, 1, header.length).setValues([header]);
+    sheet.setFrozenRows(1);
+  }
+  // preferred order first, then any posted keys not yet in the header
+  var keys = COLS.concat(Object.keys(obj).filter(function (k) { return COLS.indexOf(k) < 0; }));
+  keys.forEach(function (k) {
+    if (header.indexOf(k) < 0) { header.push(k); sheet.getRange(1, header.length).setValue(k); }
+  });
+  var row = header.map(function (h) { return obj[h] !== undefined ? obj[h] : ""; });
+  sheet.appendRow(row);
+}
+
+/** Wipe the RSVPs tab (clears test rows) and rebuild fresh headers from COLS. */
+function resetRSVPs() {
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var sh = ss.getSheetByName(SHEET_NAME);
+  if (sh) ss.deleteSheet(sh);
+  getSheet_();
 }
 
 /**

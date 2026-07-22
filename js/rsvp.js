@@ -63,6 +63,7 @@ function refreshConditionals() {
   toggle("ifCots", attending && num("under5") > 0);
   var ski = val("ski_type");
   toggle("ifSki", attending && ski && ski !== "none");
+  toggle("ifCarpoolSeats", attending && val("carpool") === "propose");
 }
 function toggle(id, show) { document.getElementById(id).classList[show ? "add" : "remove"]("show"); }
 form.addEventListener("change", refreshConditionals);
@@ -109,8 +110,8 @@ function success() {
 function showError() {
   var isFr = document.documentElement.getAttribute("data-lang") === "fr";
   errBox.textContent = isFr
-    ? "Merci de nous dire au moins qui vous êtes et si vous venez le 22."
-    : "Please tell us at least who you are and whether you're coming on the 22nd.";
+    ? "Si vous n'avez pas encore toutes les réponses, dites-nous au moins qui vous êtes et si vous venez le 22."
+    : "If you don't have all the answers yet, at least tell us who you are and whether you're coming on the 22nd.";
   errBox.classList.add("err");
   window.scrollTo({ top: 0, behavior: "smooth" });
 }
