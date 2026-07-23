@@ -108,26 +108,39 @@ function sendTest() {
   Logger.log("Test sent to " + TEST_ADDRESS + " (rendered for: " + g.name + ")");
 }
 
-/** Send to everyone not yet emailed. Marks the "sent" cell so re-runs are safe. */
+/**
+ * Send to everyone not yet emailed. Marks the "sent" cell so re-runs are safe.
+ * Counts RECIPIENTS (a 2-address household uses 2), and stops GRACEFULLY when
+ * the daily Gmail quota is nearly spent — instead of throwing. Consumer Gmail
+ * allows ~100 recipients/day, so a big list may take two days: just re-run
+ * tomorrow and it picks up exactly where it left off.
+ */
 function sendBatch() {
   var g = readGuests_();
   var sh = g.sheet, sentCol = g.idx.sent + 1;
-  var quota = MailApp.getRemainingDailyQuota();
-  var count = 0, skipped = 0;
+  var remaining = MailApp.getRemainingDailyQuota();
+  var used = 0, count = 0, skipped = 0, stoppedForQuota = false;
   var stamp = Utilities.formatDate(new Date(), "Europe/Paris", "yyyy-MM-dd HH:mm");
 
-  g.rows.forEach(function (row) {
-    if (count >= quota - 2) return;               // stay under Gmail's daily cap
-    if (row.sent) return;                          // already emailed
+  for (var i = 0; i < g.rows.length; i++) {
+    var row = g.rows[i];
+    if (row.sent) continue;                          // already emailed — skip
     var recipients = [row.email1, row.email2].filter(function (e) { return e && e.indexOf("@") > 0; });
-    if (!recipients.length) { skipped++; sh.getRange(row._row, sentCol).setValue("NO EMAIL"); return; }
+    if (!recipients.length) { skipped++; sh.getRange(row._row, sentCol).setValue("NO EMAIL"); continue; }
+
+    if (used + recipients.length > remaining - 1) { stoppedForQuota = true; break; } // not enough quota left today
 
     var m = buildEmail_(row);
     MailApp.sendEmail({ to: recipients.join(","), subject: m.subject, htmlBody: m.html,
                         name: SENDER_NAME, replyTo: REPLY_TO });
     sh.getRange(row._row, sentCol).setValue(stamp);
+    used += recipients.length;
     count++;
-  });
-  Logger.log("Sent " + count + " emails. " + skipped + " households had no address. Remaining quota: " +
-             (quota - count));
+  }
+
+  var msg = "Sent " + count + " households (" + used + " recipients). " + skipped + " had no address.";
+  if (stoppedForQuota) msg += "  ⏸ Daily email quota reached — re-run sendBatch TOMORROW to send the rest.";
+  else msg += "  ✅ Done — everyone with an address has been emailed.";
+  Logger.log(msg);
+  return msg;
 }
